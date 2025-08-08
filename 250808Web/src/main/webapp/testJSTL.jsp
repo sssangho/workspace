@@ -19,9 +19,9 @@ ${sum = sum + i;'' }
 <c:if test="true">
 <h1>무조건 실행</h1>
 </c:if>
-<c:if test="${param.kname == 'bk' and param.kage == 20} ">
-${param.kname} 입니다.<br/>
-${param.kage} 입니다.
+<c:if test="${param.name == 'bk' and param.age == 20 }">
+${param.name}입니다.</br>
+${param.age}입니다.
 </c:if>
 </body>
 </html>

@@ -18,7 +18,7 @@
     <tr>
         <td>${board.num }</td>
         <td style="text-align:left;">
-            <a href="view.jsp?num=${board.num }">${board.title }</a>
+            <a href="viewBoard.jsp?num=${board.num }">${board.title }</a>
         </td>
         <td>${board.writer}</td>
         <td>${board.regtime}</td>
