@@ -57,6 +57,10 @@
 	table { width:680px; text-align:center; }
         th    { width:100px; background-color:cyan; }
         input[type=text], textarea { width:100%; }
+        
+        table { width:680px; text-align:center; }
+        th    { width:100px; background-color:cyan; }
+        td    { text-align:left; border:1px solid gray; }
 	
 	table     { width:680px; text-align:center; }
         th        { background-color:cyan; }

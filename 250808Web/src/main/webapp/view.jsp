@@ -68,7 +68,7 @@ try {
 <br>
 <input type="button" value="목록보기" onclick="location.href='list.jsp'">
 <input type="button" value="수정"
-       onclick="location.href='updateBoard.jsp?num=<%=num%>'">
+       onclick="location.href='update.jsp?num=<%=num%>'">
 <input type="button" value="삭제"
        onclick="location.href='delete.jsp?num=<%=num%>'">
 
