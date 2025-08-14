@@ -5,7 +5,6 @@ public class TinyDTO {
 	private String content;
 	
 	public TinyDTO(int num, String content) {
-		super();
 		this.num = num;
 		this.content = content;
 	}
@@ -29,5 +28,5 @@ public class TinyDTO {
 	@Override
 	public String toString() {
 		return "TinyDTO [num=" + num + ", content=" + content + "]";
-	}
+	}	
 }

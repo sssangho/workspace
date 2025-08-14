@@ -7,8 +7,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="insert">
-<input type="text" name="content" />
+<form action="update">
+<input type="hidden" name="num" value="${dto.num}" />
+<input type="text" name="content" value="${dto.content}" />
 <input type="submit" />
 </form>
 </body>
