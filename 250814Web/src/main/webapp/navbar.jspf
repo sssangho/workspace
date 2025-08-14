@@ -75,7 +75,7 @@
 				  <a href="deptinsertForm">DEPT추가</a>
 			    </div>
 		  </li>
-		  <li><a href="https://github.com/sssangho/workspace/tree/main/250813Web">GITHUB</a></li>
+		  <li><a href="https://github.com/sssangho/workspace/tree/main/250814Web/src/main">GITHUB</a></li>
 		  <li style="float:right"><a class="active" href="#login">로그인</a></li>
 	</ul>
 </body>
