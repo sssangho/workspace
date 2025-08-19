@@ -2,6 +2,7 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -23,10 +24,13 @@ public class TinyDAO {
 		Connection conn = null;
 		Statement stmt = null;
 		ResultSet rs = null;
+		PreparedStatement pstmt = null;
 		try {
 		    conn = getConnection();
-		    stmt = conn.createStatement();
-		    rs = stmt.executeQuery("SELECT * FROM tiny");
+//		    stmt = conn.createStatement();
+//		    rs = stmt.executeQuery("SELECT * FROM tiny");
+		    pstmt = conn.prepareStatement("SELECT * FROM tiny");
+		    rs = pstmt.executeQuery();
 		    while (rs.next()) {
 		        int num = rs.getInt("num");
 		        String content = rs.getString("content");
@@ -39,7 +43,7 @@ public class TinyDAO {
 		} finally {
 		    try {
 		        if (rs != null) rs.close();
-		        if (stmt != null) stmt.close();
+		        if (pstmt != null) pstmt.close();
 		        if (conn != null) conn.close();
 		    } catch (SQLException e) {
 		    	System.out.println("리소스를 닫는 도중 오류 발생: " + e.getMessage());
@@ -51,11 +55,16 @@ public class TinyDAO {
 	public void insertOne(TinyDTO dto) {
 		Connection conn = null;
 		Statement stmt = null;
+		PreparedStatement pstmt = null;
 
 		try {
 		    conn = getConnection();
-		    stmt = conn.createStatement();
-		    stmt.executeUpdate(String.format("insert into tiny(num, content) values (tiny_seq.nextval, '%s')", dto.getContent()));
+//		    stmt = conn.createStatement();
+//		    stmt.executeUpdate(String.format("insert into tiny(num, content) values (tiny_seq.nextval, '%s')", dto.getContent()));
+		    
+		    pstmt = conn.prepareStatement("insert into tiny(num, content) values (tiny_seq.nextval, ?)");
+		    pstmt.setString(1, dto.getContent());
+		    pstmt.executeUpdate();
 		  
 		} catch (SQLException e) {
 			System.out.println("데이터베이스 오류: " + e.getMessage());
@@ -63,7 +72,7 @@ public class TinyDAO {
 			System.out.println("드라이버를 찾을 수 없습니다: " + e.getMessage());
 		} finally {
 		    try {
-		        if (stmt != null) stmt.close();
+		        if (pstmt != null) pstmt.close();
 		        if (conn != null) conn.close();
 		    } catch (SQLException e) {
 		    	System.out.println("리소스를 닫는 도중 오류 발생: " + e.getMessage());
@@ -74,11 +83,15 @@ public class TinyDAO {
 	public void deleteOne(String num) {
 		Connection conn = null;
 		Statement stmt = null;
+		PreparedStatement pstmt = null;
 
 		try {
 		    conn = getConnection();
-		    stmt = conn.createStatement();
-		    stmt.executeUpdate(String.format("delete from tiny where num = %s", num));
+//		    stmt = conn.createStatement();
+//		    stmt.executeUpdate(String.format("delete from tiny where num = %s", num));
+		    pstmt = conn.prepareStatement("delete from tiny where num = ?");
+		    pstmt.setString(1, num);
+		    pstmt.executeUpdate();
 		  
 		} catch (SQLException e) {
 			System.out.println("데이터베이스 오류: " + e.getMessage());
@@ -86,7 +99,7 @@ public class TinyDAO {
 			System.out.println("드라이버를 찾을 수 없습니다: " + e.getMessage());
 		} finally {
 		    try {
-		        if (stmt != null) stmt.close();
+		        if (pstmt != null) pstmt.close();
 		        if (conn != null) conn.close();
 		    } catch (SQLException e) {
 		    	System.out.println("리소스를 닫는 도중 오류 발생: " + e.getMessage());
@@ -99,10 +112,14 @@ public class TinyDAO {
 		Connection conn = null;
 		Statement stmt = null;
 		ResultSet rs = null;
+		PreparedStatement pstmt = null;
 		try {
 		    conn = getConnection();
-		    stmt = conn.createStatement();
-		    rs = stmt.executeQuery("SELECT * FROM tiny where num = " + num);
+//		    stmt = conn.createStatement();
+//		    rs = stmt.executeQuery("SELECT * FROM tiny where num = " + num);
+		    pstmt = conn.prepareStatement("SELECT * FROM tiny where num = ?");
+		    pstmt.setString(1, num);
+		    rs = pstmt.executeQuery();
 		    if (rs.next()) {
 		        int num1 = rs.getInt("num");
 		        String content = rs.getString("content");
@@ -115,7 +132,7 @@ public class TinyDAO {
 		} finally {
 		    try {
 		        if (rs != null) rs.close();
-		        if (stmt != null) stmt.close();
+		        if (pstmt != null) pstmt.close();
 		        if (conn != null) conn.close();
 		    } catch (SQLException e) {
 		    	System.out.println("리소스를 닫는 도중 오류 발생: " + e.getMessage());
@@ -127,11 +144,16 @@ public class TinyDAO {
 	public void updateOne(TinyDTO dto) {
 		Connection conn = null;
 		Statement stmt = null;
-
+		PreparedStatement pstmt = null;
+		
 		try {
 		    conn = getConnection();
-		    stmt = conn.createStatement();
-		    stmt.executeUpdate(String.format("update tiny set content = '%s' where num = %d", dto.getContent(), dto.getNum()));
+//		    stmt = conn.createStatement();
+//		    stmt.executeUpdate(String.format("update tiny set content = '%s' where num = %d", dto.getContent(), dto.getNum()));
+		    pstmt = conn.prepareStatement("update tiny set content = ? where num = ?");
+		    pstmt.setString(1, dto.getContent());
+		    pstmt.setInt(2, dto.getNum());
+		    pstmt.executeUpdate();
 		  
 		} catch (SQLException e) {
 			System.out.println("데이터베이스 오류: " + e.getMessage());
@@ -139,7 +161,7 @@ public class TinyDAO {
 			System.out.println("드라이버를 찾을 수 없습니다: " + e.getMessage());
 		} finally {
 		    try {
-		        if (stmt != null) stmt.close();
+		        if (pstmt != null) pstmt.close();
 		        if (conn != null) conn.close();
 		    } catch (SQLException e) {
 		    	System.out.println("리소스를 닫는 도중 오류 발생: " + e.getMessage());
